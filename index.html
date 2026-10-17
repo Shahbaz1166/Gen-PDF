@@ -3,7 +3,147 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Student Data & PDF Exporter</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- 1. jsPDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- 2. jsPDF AutoTable Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
   </head>
-  <body></body>
+  <body class="bg-slate-900 min-h-screen flex items-center justify-center p-4">
+    <!-- Main Container Card -->
+    <div
+      class="bg-white max-w-2xl w-full rounded-2xl shadow-2xl border border-gray-100 p-6 space-y-6"
+    >
+      <!-- Header -->
+      <div
+        class="border-b border-gray-100 pb-4 flex items-center justify-between"
+      >
+        <div>
+          <h1 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+            <i class="fa-solid fa-file-pdf text-red-500"></i> Student Management
+            & Report Generator
+          </h1>
+          <p class="text-xs text-gray-500 mt-1">
+            View complete student database and export filtered records
+          </p>
+        </div>
+      </div>
+
+      <!-- SECTION 1: Original All Students Data Table -->
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <h2
+            class="text-xs font-bold uppercase tracking-wider text-gray-500 flex items-center gap-1.5"
+          >
+            <i class="fa-solid fa-database text-indigo-500"></i> All Students
+            (Original Data)
+          </h2>
+          <span
+            id="allCount"
+            class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md"
+            >0 records</span
+          >
+        </div>
+        <div
+          class="overflow-hidden border border-gray-200 rounded-xl bg-white max-h-48 overflow-y-auto"
+        >
+          <table class="w-full text-left text-sm">
+            <thead
+              class="bg-gray-50 border-b border-gray-200 text-xs text-gray-500 uppercase sticky top-0"
+            >
+              <tr>
+                <th class="py-2.5 px-3 font-semibold">S.No</th>
+                <th class="py-2.5 px-3 font-semibold">Name</th>
+                <th class="py-2.5 px-3 font-semibold">Age</th>
+                <th class="py-2.5 px-3 font-semibold">Course</th>
+              </tr>
+            </thead>
+            <tbody
+              id="allTableBody"
+              class="divide-y divide-gray-100 text-gray-700"
+            >
+              <!-- Dynamic All Rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECTION 2: Filter Rule Box -->
+      <div
+        class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-xl p-3.5 text-xs text-blue-900"
+      >
+        <p class="font-bold flex items-center gap-1.5 text-blue-800">
+          <i class="fa-solid fa-filter text-blue-600"></i> Applied Filter Rule:
+        </p>
+        <p
+          class="font-mono bg-white px-2.5 py-1 rounded-lg text-blue-700 mt-1 border border-blue-100/80"
+        >
+          (Age &gt; 20 && Name == "ali") OR Course == "wma"
+        </p>
+      </div>
+
+      <!-- SECTION 3: Filtered Preview Table -->
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <h2
+            class="text-xs font-bold uppercase tracking-wider text-emerald-700 flex items-center gap-1.5"
+          >
+            <i class="fa-solid fa-filter-circle-dollar"></i> Filtered Results
+            Preview
+          </h2>
+          <span
+            id="filteredCount"
+            class="text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md"
+            >0 records</span
+          >
+        </div>
+        <div
+          class="overflow-hidden border border-emerald-200 rounded-xl bg-white"
+        >
+          <table class="w-full text-left text-sm">
+            <thead
+              class="bg-emerald-50/60 border-b border-emerald-100 text-xs text-emerald-800 uppercase"
+            >
+              <tr>
+                <th class="py-2.5 px-3 font-semibold">S.No</th>
+                <th class="py-2.5 px-3 font-semibold">Name</th>
+                <th class="py-2.5 px-3 font-semibold">Age</th>
+                <th class="py-2.5 px-3 font-semibold">Course</th>
+              </tr>
+            </thead>
+            <tbody
+              id="filteredTableBody"
+              class="divide-y divide-gray-100 text-gray-700"
+            >
+              <!-- Dynamic Filtered Rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECTION 4: Download PDF Button -->
+      <button
+        id="downloadBtn"
+        class="w-full py-3 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 active:scale-[0.99] text-white font-semibold text-sm rounded-xl transition-all shadow-md flex items-center justify-center gap-2 group"
+      >
+        <i
+          class="fa-solid fa-file-arrow-down transition-transform group-hover:-translate-y-0.5"
+        ></i>
+        Download Filtered PDF Report
+      </button>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
 </html>
